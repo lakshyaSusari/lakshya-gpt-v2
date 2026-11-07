@@ -1,0 +1,17 @@
+name: lakshya_gpt
+description: Lakshya GPT - sawal puchho, jawab + diagram + points + MCQ pao.
+publish_to: "none"
+version: 2.0.0+2
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.2.1
+  flutter_svg: ^2.0.10+1
+
+flutter:
+  uses-material-design: true
+  
