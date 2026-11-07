@@ -655,5 +655,32 @@ class _HomePageState extends State<HomePage> {
       msg = ratio >= 0.8
           ? '🏆 Shandar! Aap toh topper ho!'
           : ratio >= 0.5
-              ? '👍 Accha kiya! Thoda aur practice karo.'
+              ? '👍 Accha kiya! Thoda aur practice karo.'            : '📚 Aur mehnat karo!';
+    }
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: cs.primaryContainer,
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Score: $correct / $total',
+              style: const TextStyle(
+                  fontWeight: FontWeight.w700, fontSize: 16)),
+          if (msg.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: Text(msg),
+            ),
+          const SizedBox(height: 8),
+          LinearProgressIndicator(
+              value: total == 0 ? 0 : answered / total),
+        ],
+      ),
+    );
+  }
+}
          
