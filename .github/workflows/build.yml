@@ -1,0 +1,33 @@
+name: Build Lakshya GPT APK
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Android project banao aur APK build karo
+        run: |
+          flutter create --org com.lakshya --project-name lakshya_gpt --platforms android app_build
+          rm -rf app_build/test
+          cp -r app/lib/. app_build/lib/
+          cp app/pubspec.yaml app_build/pubspec.yaml
+          cd app_build
+          M=android/app/src/main/AndroidManifest.xml
+          sed -i 's/android:label="[^"]*"/android:label="Lakshya GPT"/' $M
+          sed -i 's#<application#<uses-permission android:name="android.permission.INTERNET"/>\n    <application#' $M
+          flutter pub get
+          flutter build apk --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Lakshya-GPT-apk
+          path: app_build/build/app/outputs/flutter-apk/app-release.apk
